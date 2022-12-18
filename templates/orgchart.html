@@ -1,0 +1,13 @@
+{% if o|length  %}
+  {% for i in o %}
+
+      <li>
+        <h4 class="level-4 rectangle"><a href="{% url 'user_info' i.id %}" target="blank">{{i.name}}</a><button id={{i.id}} onClick='ajax(this.id,{{co}})'> +</button></h4>
+      </li>
+
+  {% endfor %}
+{% else %}
+<h4>No people under this person</h4>
+{% endif %}
+
+

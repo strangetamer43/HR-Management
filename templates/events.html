@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h3>Select a team:</h3>
+
+    <form action="{% url 'custom_events' %}" method="get">
+        <label for="temp">Choose a template:</label>
+
+        <select name="temp1" id="temp">
+        <option value="null">-------</option>
+
+        {% for i in template %}
+        <option value="{{i.template_name}}">{{i.template_name}}</option>
+
+        {% endfor %}
+        <input type="submit" value="Submit">
+
+    </select>
+
+</div>
+
+{% endblock%}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if  task %}
+{% for p in task %}
+{% if not p.completed %}
+<div>
+<a href="{% url 'ticket_view' p.id %}">{{p.task_title}}---{{p.created_at}}</a>
+<a href="{% url 'end_ticket' p.id %}">End</a><br/></div>
+{% endif %}
+
+{% endfor %}
+
+{% else %}
+
+<h3>No Tickets Yet</h3>
+{% endif %}
+
+
+{% endblock %}

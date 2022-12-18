@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+<div class="row">
+  <div class="col-md-3">
+		<div class="card card-body">
+      <form  method='post' action="{% url 'input' %} ">
+        {% csrf_token %}
+      <select id="cars" name="reason">
+        <option value="login">login</option>
+        <option value="break">Break</option>
+        <option value="endbreak">End Break</option>
+        <option value="lunch">lunch</option>
+        <option value="endlunch">End lunch</option>
+        <option value="meet">meet</option>
+        <option value="endmeet">endmeet</option>
+        <option value="systemissue">systemissue</option>
+        <option value="endsystemissue">endsystemissue</option>
+        <option value="out">Logout</option>  
+      </select>
+      <input type="submit" value="Submit">
+      </form>
+		</div>
+	</div>
+    <div id="clock" class="topcorner"> 
+        00:00:00
+    </div>
+</div>
+
+<script>
+    function timer(){
+    var d=new Date()
+    var hour=d.getHours()
+    var min=d.getMinutes()
+    var sec=d.getSeconds()
+    var dataNode = document.getElementById('clock');
+    var d1;
+   
+    if(data['time']==0){
+    f=window.localStorage.getItem('d1');
+    d1=new Date(f);
+
+    }
+    if(data['time']!=0){
+       d1=new Date(data['time']);
+       window.localStorage.setItem('d1',d1);
+  }
+  
+  var diff = d.getTime() - d1.getTime();
+  let msec = diff;
+  var hh = Math.floor(msec / 1000 / 60 / 60);
+  if(hh<10) hh='0'+hh;
+  msec -= hh * 1000 * 60 * 60;
+  var mm = Math.floor(msec / 1000 / 60);
+  if(mm<10) mm='0'+mm;
+  msec -= mm * 1000 * 60;
+  var ss = Math.floor(msec / 1000);
+  if(ss<10) ss='0'+ss;
+  msec -= ss * 1000;
+  dataNode.innerHTML=hh+":"+mm+":"+ss+'<br/>';
+}
+  var data = JSON.parse("{{data|escapejs}}");
+  if(data['status']=='Logged Out'){
+    clearInterval(t);
+    window.localStorage.clear();
+    console.log("clearInterval");
+    dataNode.innerHTML="00:00:00"; 
+  }
+  else if(data['status']!='User just entered'){
+    t=setInterval(timer,1000)
+  }
+
+
+</script>
+
+{% endblock %}

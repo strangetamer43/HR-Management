@@ -1,0 +1,77 @@
+
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/tree.css' %}">
+{% endblock %}
+
+{% block content %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static '/css/tree.css' %}">
+    </head>
+        <ol class="level-4-wrapper" id="selectVehicle{{forloop.counter}}"  href="{% url 'orgchart' %}"></ol>
+    
+    <div class="container">
+
+        <h1 class="level-1 rectangle">{{lead.name}}</h1>
+        
+        <ol class="level-2-wrapper">
+            {% for i in ob %}
+          <li id={{forloop.counter}}>
+            <h3 class="level-3 rectangle"><a href="{% url 'user_info' i.id %}" target="blank">{{i.name}}</a><button id={{i.id}} onClick='ajax(this.id,{{forloop.counter}})'> +</button></h3>
+            <ol class="level-4-wrapper" id="selectVehicle{{forloop.counter}}"  href="{% url 'orgchart' %}"></ol>
+          </li>
+          {% endfor %}
+        </ol>
+       
+      </div>
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> {% endcomment %}
+
+
+    <script>
+        var url = $('#selectVehicle').attr("href"); 
+        function ajax(id,count) {
+          var teamId = id;                         // get the selected country ID from the HTML input
+          console.log(url)
+          console.log(teamId)
+          var c = count
+          var s= "#selectVehicle"+c
+          console.log(s)  
+
+          $.ajax({                       // initialize an AJAX request
+            url: url,                  // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'pid':teamId,
+                'count':c
+            },
+            success: function (data) {  
+              
+    
+                console.log("::::::::::::::::::::::::::::::::::::::::")
+                console.log(data)
+               // `data` is the return of the `load_cities` view function 
+        $(s).append(data);  // replace the contents of the city input with the data that came from the server
+            }
+          });
+    
+        };
+      
+      </script>
+</html>
+
+
+{% comment %} {% endblock %} {% endcomment %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    Overtime :
+	{% for i in overtime %}
+	{{i}}-------{{i.overtimedate}}--<a href="{% url 'approve_overtime' i.id %}">Approve</a>  <a href="{% url 'disapprove_overtime' i.id %}"> Reject</a>
+	{% endfor %}
+</div>
+
+{% endblock%}

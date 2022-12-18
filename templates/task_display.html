@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>PENDING:</h3>
+{% if  task %}
+{% for p in task %}
+{% comment %} {% if not p.completed %} {% endcomment %}
+
+<a href="{% url 'task_view' p.id %}">{{p.task_title}}---{{p.published_at}}</a><br/>
+{% comment %} {% endif %} {% endcomment %}
+
+{% endfor %}
+{% endif %}
+
+<br>
+
+<h3>Completed:</h3>
+<br/>
+{% for p in completed_task %}
+
+
+<a href="{% url 'task_view' p.id %}">{{p.task_title}}---{{p.published_at}}</a><br/>
+
+
+{% endfor %}
+
+{% endblock %}

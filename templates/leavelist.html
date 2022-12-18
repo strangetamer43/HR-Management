@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    LEAVES :
+	{% for i in leaves %}
+	<br/>
+	{{i.date}}------{{i.user}}---<a href="{% url 'approve_leave' i.id %}">Approve</a>  
+	<a href="{% url 'disapprove_leave' i.id %}"> Reject</a>
+	{% endfor %}
+</div>
+
+{% endblock%}

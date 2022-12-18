@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <br>
+    <h3>Overtime Form<span title="Choose overtime you want for the available slots during the day.&#013;This form helps you to avail an overtime schedule for work."><i class="fa-regular fa-block-question"></i></span></h3>
+    <div class="col-md-8">
+        <div class="card card-body"> 
+            <form method="POST" class="col-sm-6 col-form-label" id="TaskForm" data-persons-url="{% url 'ajax_load_overtime' %}" novalidate>
+              {% csrf_token %}
+              {{form.as_p}}
+          
+            <input class="btn btn-primary" type="submit" name="Submit Task">
+            </form> 
+        </div>
+    </div>
+    <a href="{% url 'myovertime' %}">MyOvertime</a><br/>
+    {% if request.user.is_staff %}
+        <a href="{% url 'overtimelist' %}">Overtime List</a><br/>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <script>
+    $("#id_overtimedate").change(function () {
+      var url = $("#TaskForm").attr("data-persons-url");  // get the url of the `load_cities` view
+      var teamId = $(this).val();                         // get the selected country ID from the HTML input
+      console.log(url)
+      console.log(teamId)
+
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'team': teamId             // add the country id to the GET parameters
+        },
+        success: function (data) {      // `data` is the return of the `load_cities` view function
+          $("#id_overtime").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+{% endblock%}

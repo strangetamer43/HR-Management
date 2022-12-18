@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3><i>Policy Updates Below:</i></h3>
+<br>
+{% if policy %}
+{% for p in policy %}
+
+    <a href="{% url 'policyview' p.slug %}">{{p.policy_title}}---{{p.time}}</a><br/>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

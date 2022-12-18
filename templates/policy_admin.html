@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+	{% block content %}
+    <br>
+    <h3>Policy Form<span title="This page has Policy creation form that needs &#013;to be filled according to teams with title along with their description.&#013;This will be used to share policies across the various teams and updates."><i class="fa-regular fa-block-question"></i></span></h3>
+    <div class="col-md-8">
+        <div class="card card-body"> 
+            <form method="POST" class="col-sm-5">
+              {% csrf_token %}
+              {{form.as_p}}
+          
+            <input class="btn btn-success" type="submit" name="Update Information">
+            </form> 
+        </div>
+    </div>
+</div>
+	
+{% endblock %}

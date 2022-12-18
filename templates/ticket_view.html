@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>{{ticket.task_title}}
+<p>{{ticket.description}}</p><br/>
+<h1>chats</h1><br/>
+{% for chat in chats %}
+{{chat.sent_by}}
+<p>{{chat.message}}</p><br/>
+
+
+{% endfor %}
+<form method='post'>
+    {% csrf_token %}
+    <div>
+    Response:</div>
+    <textarea placeholder="enter response" name='response' rows="5" cols="33" ></textarea>
+    <input type="submit" value="Submit">
+  </form>
+
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-black  mb-3" id="total-leaves">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Total Leaves</h5>    
+			  	</div>
+			  	 <div class="card-body">
+			    	<h3 class="card-title">{{cust.total_leaves}}</h3>
+			  	</div> 
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-black  mb-3" id="casual-leaves">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Casual Leaves</h5>      
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{cust.casual_leaves}}</h3>
+			  	</div> 
+			</div>
+		</div>
+	</div>
+ 
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-black  mb-3" id="sick-leaves">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Sick Leaves</h5>      
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{cust.sick_leaves}}</h3>
+			  	</div> 
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-black  mb-3" id="optional-leaves">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Optional Leaves</h5>     
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{cust.optional_leaves}}</h3>
+			  	</div> 
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container-fluid">
+    <h3>Select date for leave:</h3>
+    <form method="post" class="col-sm-6 col-form-label">
+		{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit leave">
+    </form>
+
+	<a href="{% url 'myleaves' %}">My Leaves</a>
+	{% if request.user.is_staff %}
+		<a href="{% url 'leaveslist' %}">Leaves List</a>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+  .hi{
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+</style>
+{% endblock %}
+{% block content%}
+
+<div>
+  {{lead.name}}
+</div>
+{% for i in ob %}
+    {% comment %} {{i.name}} {% endcomment %}
+    {% comment %} <button href="{% url 'orgchart' i.id %}" value='{{i.id}}' id='a'> {{i.name}}</button> {% endcomment %}
+    </br>
+    <div>
+   <a href="{% url 'user_info' i.id %}" target="blank">{{i.name}}</a>&nbsp<span ><button class='btn' id={{i.id}} onClick='ajax(this.id)'> +</button></span></div>
+    {% comment %} <div id='person' value='{{i.id}}'>
+    </div> {% endcomment %}
+{% endfor %}
+<div id="selectVehicle"  href="{% url 'orgchart' %}"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% comment %} $( "#bind" ).click(function() {
+  $(this).attr("disabled", "disabled");
+  $("#unbind").removeAttr("disabled");
+});
+$( "#unbind" ).click(function() {
+    $(this).attr("disabled", "disabled");
+    $("#bind").removeAttr("disabled");
+}); {% endcomment %}
+  <script>
+    var url = $('#selectVehicle').attr("href"); 
+    $('btn').className='hi';
+
+                         // get the url of the `load_cities` view
+    function ajax(id) {
+      var teamId = id;                         // get the selected country ID from the HTML input
+      console.log(url)
+      console.log(teamId)
+      
+
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+            'pid':teamId
+                     // add the country id to the GET parameters
+        },
+        success: function (data) {  
+          
+
+            console.log("::::::::::::::::::::::::::::::::::::::::")
+           // console.log(data)
+           // `data` is the return of the `load_cities` view function 
+    $("#selectVehicle").append(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    };
+  </script>
+
+{% endblock%}

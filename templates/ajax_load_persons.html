@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for p in persons %}
+<option value="{{ p.pk }}">{{ p.name }}</option>
+{% endfor %}

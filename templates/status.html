@@ -1,0 +1,43 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+	.profile-pic{
+		max-width: 100px;
+		max-height:100px;
+		margin: 0 ;
+		border-radius: 50%;
+	}
+</style>
+<br>
+    <div class="row">
+        <div class="col-md-3">
+                <h1>Profile</h1>
+        </div>
+        <div class="col-md-3">
+            <h1> Name</h1>
+        </div>
+        <div class="col-md-3">
+            <h1> status</h1>
+    </div>
+    </div>
+<hr>
+<br/>
+    {% for customer in customers %}
+    <div class="row">
+        <div class="col-md-3">
+                <img class="profile-pic"  alt='profile' src="{{customer.profile_pic.url}}">
+        </div>
+        <div class="col-md-3">
+            <h5> {{customer.name}}</h5>
+        </div>
+        <div class="col-md-3">
+            <h5> {{customer.status}}</h5> 
+        </div>
+    </div>
+    <hr>
+    <br/>
+    {% endfor %}
+
+{% endblock %}

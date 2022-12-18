@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method='post'>
+    {% csrf_token %}
+   Select User:<select name='user'>
+    <option value="Choose User">------</option>
+   {% for user in user %}  
+    <option value='{{user.id}}'>{{user}}</option>
+    {% endfor %}
+   </select>
+	<br/>
+	Select Working days:<input type="number" name='working_days'>
+	<br/>
+   <input type="submit" value="search">
+
+</form>
+{% endblock %}

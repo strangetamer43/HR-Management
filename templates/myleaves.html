@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    {% for i in leaves %}
+	{% if i.accepted %}
+	{{i.date}}---Approved
+
+	<br/>
+	{% elif i.seen %}
+	{{i.date}}---Disapproved<br/>
+
+	{% else %}
+	{{i.date}}----Pending<br/>
+
+	{% endif %}
+
+	{% endfor %}
+</div>
+
+{% endblock%}

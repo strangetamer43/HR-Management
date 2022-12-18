@@ -1,0 +1,22 @@
+/* #logo{
+		} */
+        body {
+            background-color: #ebeff5;
+        }
+        
+        #total-leaves {
+            background-color: #4cb4c7;
+        }
+
+        #casual-leaves {
+            background-color: #4cb4c7;
+        }
+        
+        #sick-leaves {
+            background-color: #7abecc;
+        }
+        
+        #optional-leaves {
+            background-color: #7abecc;
+        }
+        

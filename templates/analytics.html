@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<style>
+    .chartMenu {
+        margin-top:50px;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(255, 26, 104, 1);
+    }
+    .chartMenu p {
+      padding: 10px;
+      font-size: 20px;
+    }
+    .chartCard {
+      height: calc(100vh - 40px);
+      background: rgba(255, 130, 104, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chartBox {
+      width: 400px;
+      padding: 20px;
+      border-radius: 15px;
+      border: solid 3px rgba(255, 26, 104, 1);
+      background: white;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<h3> Work Items per Day Ratio--{{workitems_ratio}}</h3>
+<h3> Work Items per Hour Ratio--{{work_items_per_hour}}</h3>
+<h3> Work Items done til date--{{workitems}}</h3>
+<h3> Number of days worked--{{total_days_worked}}</h3>
+<br>
+<h3> Total Productive time : {{time}} </h3>
+<h3> Total Meet time : {{meettime}} </h3>
+<h3> Total Break time : {{breaktime}} </h3>
+<h3> Total system not working time : {{systemtime}}</h3>
+<h3> Number of days on leave : {{total_leaves_count}}</h3>
+<h3> Casual leaves taken : {{casual}}</h3>
+<h3> Sick leaves taken : {{sick}}</h3>
+<h3> Optional leaves taken : {{optional}}</h3>
+<h3> Attendace:{{count}}</h3>
+<br>
+
+<form method='post'>
+    {% csrf_token %}
+   From :<input type='date'name='from' />
+   To :<input type='date' name='to' />
+   <input type="submit" value="search"> 
+   <h6> Note: One month difference is required for work items per day and work items per hour chart</h6>
+</form>
+
+<div class="chartMenu">
+    <h3>Analysis</h3>
+</div>
+<div class="chartCard">
+    <div class="chartBox">
+        <canvas id="myChart" width="200" height="200"></canvas>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="chartBox">
+        <canvas id="goodChart1" width="200" height="200"></canvas>
+    </div>
+</div>
+<div class="chartCard">
+    <div class="chartBox">
+        <canvas id="goodChart2" width="200" height="200"></canvas>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="chartBox">
+        <canvas id="goodChart3" width="200" height="200"></canvas>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="chartBox">
+        <canvas id="goodChart4" width="200" height="200"></canvas>
+    </div>
+</div>
+
+
+<script>
+    // setup 
+    const d={{datas|safe}};
+    const k={{label|safe}};
+    console.log(d)
+   
+   const data = {
+        labels: k,
+        datasets: [{
+          label: 'Meet,break and productive time',
+          data: d,
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(55, 205, 132)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+       // config 
+    const config = {
+        type: 'doughnut',
+        data: data,
+      };
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    
+      //second chart
+      const ctx = document.getElementById('goodChart1').getContext('2d');
+      const goodChart1 = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['No. of days worked'],
+              datasets: [{
+                  label: 'Work Days Analysis',
+                  data: [ {{total_days_worked}}],
+                  backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                  ],
+                  borderColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+        });
+        //third chart
+        const ctx1 = document.getElementById('goodChart2').getContext('2d');
+        const goodChart2 = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+              labels: ['workitems per day'],
+              datasets: [{
+                  label: 'Work Days Analysis',
+                  data: [ {{workitems_ratio}}],
+                  backgroundColor: [
+                      'rgba(255, 206, 86, 0.8)',
+                  ],
+                  borderColor: [
+                      'rgba(255, 206, 86, 1)',
+                  ],
+                  borderWidth: 1
+              },{
+                type: 'line',
+                label: '(Target)',
+                data: [{{target_perday}}],
+                borderColor: 'green'
+            }]
+          },
+        });
+        //fifth chart
+        const ctx2 = document.getElementById('goodChart3').getContext('2d');
+        const goodChart3 = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+              labels: ['Workitems per hour'],
+              datasets: [{
+                  label: 'Work Days Analysis',
+                  data: [ {{work_items_per_hour}}],
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 0.8)',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',       
+                  ],
+                  borderWidth: 1
+              },{
+                type: 'line',
+                label: '(Target)',
+                data: [{{target_perhour}}],
+                borderColor: 'green'
+            }]
+          },
+        });
+        //fourth chart
+        const ctx3 = document.getElementById('goodChart4').getContext('2d');
+        const goodChart4 = new Chart(ctx3, {
+          type: 'bar',
+          data: {
+              labels: ['Leaves took'],
+              datasets: [{
+                  label: 'Work Days Analysis',
+                  data: [ {{total_leaves_count}}],
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 0.8)',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',       
+                  ],
+                  borderWidth: 1
+              }]
+          },
+        });
+        
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} Code I wrote:beginning {% endcomment %}
+{% comment %} <br>
+<br>
+{% endblock %} {% endcomment %}
+
+
+
+{% comment %} {% block custom_js %}
+<canvas id="myChart" aria-label="chart" role="img" width="500"height="500"></canvas>
+<canvas id="goodChart1" aria-label="chart" role="img" width="500"height="500"></canvas>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Meet Time', 'Break time','System NW time'],
+        datasets: [{
+            label: 'Meet and Break Time Analysis',
+            data: [ {{meettime}}, {{breaktime}}, {{systemtime}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        //scales: {
+        //    y: {
+        //        beginAtZero: true
+        //    }
+        //},
+        responsive:false,
+        layout:{
+            padding:{
+                left:50,
+                right:0,
+                top:0,
+                bottom:0
+            }
+        }
+    },
+});
+
+const ctnx = document.getElementById('goodChart1').getContext('2d');
+const myChart1 = new Chart(ctnx, {
+    type: 'bar',
+    data: {
+        labels: ['Meet Time', 'Break time','System NW time'],
+        datasets: [{
+            label: 'Meet and Break Time Analysis',
+            data: [ {{meettime}}, {{breaktime}}, {{systemtime}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        //scales: {
+        //    y: {
+        //        beginAtZero: true
+        //    }
+        //},
+        responsive:false,
+        layout:{
+            padding:{
+                left:50,
+                right:0,
+                top:0,
+                bottom:0
+            }
+        }
+    },
+});
+</script>
+
+{% endblock custom_js %}   {% endcomment %}

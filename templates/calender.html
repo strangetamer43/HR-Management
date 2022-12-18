@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>View Personal Calendar:</h3>
+    {% if percal|length < 2 %}
+    <h4 class="alert alert-danger">No Personel Calendar</h4>
+    {% else %}
+    <h3><a href={{percal}}>Personel Calendar</a></h3>
+    {% endif %}
+
+    <hr>
+
+    <h3>View Team Calendar:</h3>
+    {% if teamcal|length < 2 %} 
+    <h4 class="alert alert-danger">No Team Calendar</h4>
+    {% else %}
+    <h3><a href={{teamcal}}>Team Calendar</a></h3><br/>
+    {% endif %}
+
+{% endblock%}

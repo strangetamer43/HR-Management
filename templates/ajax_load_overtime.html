@@ -1,0 +1,6 @@
+<option value="">---------</option>
+{% for p in persons %}
+{% if p.no_of_slots %}
+ <option value="{{ p.pk }}">{{p}}----slots:{{p.no_of_slots}}</option>
+ {% endif %}
+{% endfor %}

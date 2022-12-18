@@ -1,0 +1,134 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <script src="https:code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="{% static 'tree/js/jquery-ui-1.10.4.custom.min.js' %}"></script>
+    <script src="{% static 'tree/js/jQuery.jHTree.js' %}"></script>
+
+    <script type="text/javascript">
+        var l={{info | safe}}
+        
+        //console.log(l)
+        $(function () {
+            $("#tree").jHTree({
+                callType: 'url',
+                //url: "{% static 'tree/data/myJsonFile.json' %}",
+                nodeDropComplete: function (event, data) {
+                    //----- Do Something @ Server side or client side -----------
+                    alert("Node ID: " + data.nodeId + " Parent Node ID: " + data.parentNodeId);
+                  //  -----------------------------------------------------------
+                }
+            });
+           // -------------------
+            var jsonStructureObject = [
+                l
+                //{"head": "lokesh", "id": 1, "children": [{"head": "user1a", "id": 3, "children": [{"head": "user2a", "id": 10, "children": []}]}, {"head": "user8a", "id": 9, "children": []}]} 
+                //{"head": "lokesh", "id": 1, "children": [{"head": "user1a", "id": 3, "children": [{"head": "user2a", "id": 10}]}, {"head": "user8a", "id": 9}]}      
+                ];
+           // -----------
+            $("#tree").jHTree({
+                callType: 'obj',
+                structureObj: jsonStructureObject
+            });
+        });
+    </script>
+    
+
+<style type="text/css">
+    body { background-color: #fafafa; font-family: 'Roboto'; }
+    .container { margin: 150px auto; max-width: 960px; }
+        #themes {
+            font-size: 1.2em;
+        }
+
+        #set {
+            border: 2px solid #ddd;
+            padding: 2px;
+            background: #444;
+            width: 350px;
+            height: 30px;
+        }
+
+            #set a {
+                margin: 2px;
+                border: 1px solid #444;
+                float: left;
+            }
+
+                #set a:hover {
+                    border-color: #fff;
+                }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#themes a').click(function () {
+                var theme = $(this).attr('href');
+                $('head').append('<link href="' + theme + '" rel="Stylesheet" type="text/css" />');
+                return false;
+            });
+
+        });
+    </script>
+
+
+
+
+    <div class="container">
+        <h1>Organization Chart </h1>
+        <div id="tree">
+        
+
+        </div>
+        <div id="themes">
+            <span id="changeItUp">Change Theme</span>
+            <div id="set">
+                <a href="{% static 'tree/Themes/smoothness/jquery-ui-1.10.4.custom.min.css' %}" title="Smoothness">
+                    <img src="{% static 'tree/images/themethumbs/themenail_smoothness.png' %}" alt="image" width="25" height="22" />
+                </a>
+                <a href="{% static 'tree/Themes/black-tie/jquery-ui-1.10.4.custom.min.css' %}" title="blacktie">
+                    <img src="{% static 'tree/images/themethumbs/themenail_blacktie.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/south-street/jquery-ui-1.10.4.custom.min.css' %}" title="South Street">
+                    <img src="{% static 'tree/images/themethumbs/themenail_southst.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/mint-choc/jquery-ui-1.10.4.custom.min.css' %}" title="Mint Choco">
+                    <img src="{% static 'tree/images/themethumbs/themenail_mintchoc.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/dot-luv/jquery-ui-1.10.4.custom.min.css' %}" title="Dot Luv">
+                    <img src="{% static 'tree/images/themethumbs/themenail_dotluv.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/humanity/jquery-ui-1.10.4.custom.min.css' %}" title="humanity">
+                    <img src="{% static 'tree/images/themethumbs/humanity.png' %}" alt="image" width="25" height="22" />
+                </a>
+                <a href="{% static 'tree/Themes/cupertino/jquery-ui-1.10.4.custom.min.css' %}" title="Cupertino">
+                    <img src="{% static 'tree/images/themethumbs/themenail_cupertino.png' %}" alt="image" width="25" height="22" />
+                </a>
+                <a href="{% static 'tree/Themes/le-frog/jquery-ui-1.10.4.custom.min.css' %}" title="le-frog">
+                    <img src="{% static 'tree/images/themethumbs/le-frog.png' %}" alt="image" width="25" height="22" />
+                </a>
+                <a href="{% static 'tree/Themes/swanky-purse/jquery-ui-1.10.4.custom.min.css' %}" title="swanky-purse">
+                    <img src="{% static 'tree/images/themethumbs/swanky-purse.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/trontastic/jquery-ui-1.10.4.custom.min.css' %}" title="trontastic">
+                    <img src="{% static 'tree/images/themethumbs/trontastic.png' %}" alt="image" width="25" height="22" />
+                </a>
+
+                <a href="{% static 'tree/Themes/ui-lightness/jquery-ui-1.10.4.custom.min.css' %}" title="lightness">
+                    <img src="{% static 'tree/images/themethumbs/lightness.png' %}" alt="image" width="25" height="22" />
+                </a>
+            </div>
+        </div>
+
+
+    <br />
+    
+    </div>
+    
+{% endblock %}

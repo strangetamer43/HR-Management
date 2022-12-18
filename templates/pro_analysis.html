@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3> Process Title: {{process.process_title}}</h3> 
+
+<h3>Time taken for process:
+{{total_timetaken}}</h3>
+
+{% for i in tasks %}
+<h3>
+<p>{{i.task}}</p></h3>
+{{i}}
+{% endfor %}
+
+{% endblock %}

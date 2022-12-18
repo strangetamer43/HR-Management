@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+<p>{{task.description}}</p><br/>
+{% if flag is not None%}<a href="{% url 'task_agree' task.id %}" ><button class='btn btn-primary'>Start</button></a>
+{% else %}<div class="btn btn-default disabled" style="cursor:default;">Start</div>
+{% endif %}
+{% if task.completed %}<div class="btn btn-default disabled" style="cursor:default;">Finished</div>
+{% else %}
+<a href="{% url 'task_finish' task.id %}" ><button class='btn btn-primary'>Finished</button></a>
+{% endif %}
+
+{% comment %} {% if comp %} <div class="btn btn-default disabled" style="cursor:default;">Process Completed</div>
+{% else %} {% endcomment %}
+<a href="{% url 'end_process' task.id %}" ><button class='btn btn-primary'>End Process</button></a>
+{% comment %} {% endif %} {% endcomment %}
+
+{% endblock %}
